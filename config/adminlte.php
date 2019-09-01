@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'Gestão de negócios',
 
-    'title_prefix' => '',
+    'title_prefix' => 'Gestão negócios - ',
 
     'title_postfix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>GESTÃO</b> NEGÓCIOS',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '<b>G</b>NG',
 
     /*
     |--------------------------------------------------------------------------
@@ -128,85 +128,98 @@ return [
     */
 
     'menu' => [
+//        [
+//            'text' => 'search',
+//            'search' => true,
+//        ],
+//        ['header' => 'main_navigation'],
+//        [
+//            'text' => 'Produtos',
+//            'url'  => 'produtos',
+//            'can'  => 'manage-blog',
+//        ],
         [
-            'text' => 'search',
-            'search' => true,
-        ],
-        ['header' => 'main_navigation'],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text'          => 'Home',
+            'url'           => 'home',
+            'icon'          => 'fa fa-home',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text'          => 'Atendimento',
+            'url'           => 'servicos',
+            'icon'          => 'far fa-file',
         ],
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
+            'text'          => 'Relatório',
+            'url'           => 'servicos',
+            'icon'          => 'far fa-file',
         ],
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
+            'text'          => 'Estoque',
+            'url'           => 'servicos',
+            'icon'          => 'far fa-file',
         ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'aqua',
-        ],
+//        ['header' => 'account_settings'],
+//        [
+//            'text' => 'profile',
+//            'url'  => 'admin/settings',
+//            'icon' => 'fas fa-fw fa-user',
+//        ],
+//        [
+//            'text' => 'change_password',
+//            'url'  => 'admin/settings',
+//            'icon' => 'fas fa-fw fa-lock',
+//        ],
+//        [
+//            'text'    => 'multilevel',
+//            'icon'    => 'fas fa-fw fa-share',
+//            'submenu' => [
+//                [
+//                    'text' => 'level_one',
+//                    'url'  => '#',
+//                ],
+//                [
+//                    'text'    => 'level_one',
+//                    'url'     => '#',
+//                    'submenu' => [
+//                        [
+//                            'text' => 'level_two',
+//                            'url'  => '#',
+//                        ],
+//                        [
+//                            'text'    => 'level_two',
+//                            'url'     => '#',
+//                            'submenu' => [
+//                                [
+//                                    'text' => 'level_three',
+//                                    'url'  => '#',
+//                                ],
+//                                [
+//                                    'text' => 'level_three',
+//                                    'url'  => '#',
+//                                ],
+//                            ],
+//                        ],
+//                    ],
+//                ],
+//                [
+//                    'text' => 'level_one',
+//                    'url'  => '#',
+//                ],
+//            ],
+//        ],
+//        ['header' => 'labels'],
+//        [
+//            'text'       => 'important',
+//            'icon_color' => 'red',
+//        ],
+//        [
+//            'text'       => 'warning',
+//            'icon_color' => 'yellow',
+//        ],
+//        [
+//            'text'       => 'information',
+//            'icon_color' => 'aqua',
+//        ],
     ],
 
     /*
