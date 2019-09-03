@@ -26,5 +26,10 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('lancamentos')->group(function () {
         Route::get('/', 'LancamentosController@index')->name('lancamentos.listar');
+        Route::get('criar', 'LancamentosController@create')->name('lancamentos.criar');
+        Route::post('criar', 'LancamentosController@store')->name('lancamentos.salvar');
+        Route::get('{id}/editar', 'LancamentosController@edit')->name('lancamentos.editar');
+        Route::put('{id}/editar', 'LancamentosController@update')->name('lancamentos.atualizar');
+        Route::delete('{id}/deletar', 'LancamentosController@destroy')->name('lancamentos.deletar');
     });
 });

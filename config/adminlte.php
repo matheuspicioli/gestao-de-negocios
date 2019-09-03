@@ -145,7 +145,7 @@ return [
         ],
         [
             'text'          => 'Atendimento',
-            'url'           => 'servicos',
+            'url'           => 'lancamentos',
             'icon'          => 'far fa-file',
         ],
         [
