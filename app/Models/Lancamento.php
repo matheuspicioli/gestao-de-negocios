@@ -20,6 +20,10 @@ class Lancamento extends Model
         'servico_id',
     ];
     
+    protected $appends = [
+        'preco_total'
+    ];
+    
     public function usuario ()
     {
         return $this->belongsTo(User::class, 'usuario_id', 'id');
@@ -27,10 +31,20 @@ class Lancamento extends Model
     
     public function item ()
     {
-        if ($this->produto_id) {
+        if ($this->attributes['produto_id']) {
             return $this->belongsTo(Produto::class, 'produto_id', 'id');
         }
         
         return $this->belongsTo(Servico::class, 'servico_id', 'id');
+    }
+    
+    public function getPrecoTotalAttribute ()
+    {
+        $total = 0;
+        for ($i = 1; $i <= $this->attributes['quantidade']; $i++) {
+            $total += $this->item->preco;
+        }
+        
+        return $total;
     }
 }
