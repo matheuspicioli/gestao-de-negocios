@@ -11,22 +11,8 @@
 
     <div class="col-xs-3">
         <div class="form-group">
-            {!! Form::label('item', 'Tipo item') !!}
-            {!! Form::select('item', [null => 'Selecione...','S' => 'Serviço', 'P' => 'Produto'], null, ['class' => 'form-control', 'id' => 'item']) !!}
-        </div>
-    </div>
-
-    <div class="col-xs-3">
-        <div class="form-group">
-            {!! Form::label('servico_id', 'Serviços') !!}
-            {!! Form::select('servico_id', $servicos, null, ['class' => 'form-control', 'id' => 'servico_id']) !!}
-        </div>
-    </div>
-
-    <div class="col-xs-3">
-        <div class="form-group">
-            {!! Form::label('produto_id', 'Produtos') !!}
-            {!! Form::select('produto_id', $produtos, null, ['class' => 'form-control', 'id' => 'produto_id']) !!}
+            {!! Form::label('items[]', 'Item') !!}
+            {!! Form::select('items[]', $itens, $itensSelected ?? null, ['class' => 'form-control', 'id' => 'items[]', 'multiple' => 'multiple']) !!}
         </div>
     </div>
 

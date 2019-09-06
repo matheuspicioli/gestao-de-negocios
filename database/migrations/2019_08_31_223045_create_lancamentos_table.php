@@ -23,20 +23,6 @@ class CreateLancamentosTable extends Migration
             $table->foreign('usuario_id')
                 ->references('id')
                 ->on('users');
-    
-            $table->bigInteger('produto_id')->unsigned()->nullable();
-            $table->foreign('produto_id')
-                ->references('id')
-                ->on('produtos')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-    
-            $table->bigInteger('servico_id')->unsigned()->nullable();
-            $table->foreign('servico_id')
-                ->references('id')
-                ->on('servicos')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             
             $table->timestamps();
             $table->softDeletes();

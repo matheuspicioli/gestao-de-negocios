@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Edição de serviço')
+@section('title', 'Edição de item')
 
 @section('content_header')
-    <h1>Edição de <small>serviço</small></h1>
+    <h1>Edição de <small>item</small></h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li>
-            <a href="{{ route('servicos.listar') }}"><i class="fa fa-home"></i> Serviços</a>
+            <a href="{{ route('itens.listar') }}"><i class="fa fa-home"></i> Item</a>
         </li>
         <li class="active">
             <i class="fa fa-home"></i> Edição</a>
@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-    @include('partials.back-button', ['url' => 'servicos.listar'])
+    @include('partials.back-button', ['url' => 'itens.listar'])
 
     <div class="row">
         <div class="col-xs-12">
@@ -31,9 +31,9 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-xs-12">
-                                {!! Form::open(['route' => ['servicos.atualizar', $servico->id]]) !!}
+                                {!! Form::open(['route' => ['itens.atualizar', $item->id]]) !!}
                                     {!! method_field('PUT') !!}
-                                    @include('servicos._form')
+                                    @include('itens._form')
                                 {!! Form::close() !!}
                             </div>
                         </div>

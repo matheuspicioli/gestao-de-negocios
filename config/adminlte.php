@@ -155,8 +155,8 @@ return [
         ],
         [
             'text'          => 'Estoque',
-            'url'           => 'servicos',
-            'icon'          => 'far fa-file',
+            'url'           => 'estoque',
+            'icon'          => 'fa fa-cubes',
         ],
 //        ['header' => 'account_settings'],
 //        [

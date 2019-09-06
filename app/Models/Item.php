@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Produto extends Model
+class Item extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'produtos';
+    protected $table = 'items';
     
     protected $fillable = [
         'nome',
         'preco',
+        'tipo',
     ];
     
     public function lancamentos ()
     {
-        return $this->hasMany(Lancamento::class, 'produto_id', 'id');
+        return $this->belongsToMany(Item::class, 'lancamentos_items');
     }
 }

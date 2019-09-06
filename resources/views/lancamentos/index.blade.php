@@ -64,7 +64,7 @@
                             <table id="produtos-table" class="table table-bordered table-hover dataTable" role="grid">
                                 <thead>
                                 <tr>
-                                    <th>Item</th>
+                                    <th>Itens</th>
                                     <th>Quantidade</th>
                                     <th>Tipo</th>
                                     <th>Preço total</th>
@@ -74,7 +74,11 @@
                                 <tbody>
                                     @foreach($lancamentos as $lancamento)
                                         <tr>
-                                            <td>{{ $lancamento->item->nome }}</td>
+                                            <td>
+                                                @foreach($lancamento->itens as $item)
+                                                    {{ $item->nome }} @if (!$loop->last), @endif
+                                                @endforeach
+                                            </td>
                                             <td>{{ $lancamento->quantidade }}</td>
                                             <td>{{ $lancamento->tipo }}</td>
                                             <td>

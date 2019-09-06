@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServicosTable extends Migration
+class CreateItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateServicosTable extends Migration
      */
     public function up()
     {
-        Schema::create('servicos', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
             $table->string('nome');
             $table->decimal('preco', 10, 2);
+            $table->enum('tipo', ['PRODUTO', 'SERVICO'])->default('SERVICO');
             
             $table->timestamps();
             $table->softDeletes();
@@ -31,8 +31,6 @@ class CreateServicosTable extends Migration
      */
     public function down()
     {
-        Schema::table('servicos', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('items');
     }
 }
