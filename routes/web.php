@@ -10,6 +10,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'EstoquesController@index')->name('estoque.index');
     });
     
+    Route::prefix('relatorios')->group(function () {
+        Route::get('/', 'RelatoriosController@index')->name('relatorios.index');
+        
+        Route::prefix('estoque')->group(function () {
+            Route::get('/', 'RelatoriosController@estoque')->name('relatorios.estoque.index');
+            Route::get('/gerar', 'RelatoriosController@gerarRelatorioEstoque')->name('relatorios.estoque.gerar');
+        });
+    
+        Route::prefix('lancamentos')->group(function () {
+            Route::get('/', 'RelatoriosController@lancamento')->name('relatorios.lancamento.index');
+            Route::get('/gerar', 'RelatoriosController@gerarRelatorioLancamento')->name('relatorios.lancamento.gerar');
+        });
+    });
+    
     Route::prefix('itens')->group(function () {
         Route::get('/', 'ItensController@index')->name('itens.listar');
 //        Route::get('criar', 'ItensController@create')->name('itens.criar');

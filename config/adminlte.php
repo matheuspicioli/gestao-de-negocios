@@ -146,17 +146,17 @@ return [
         [
             'text'          => 'Atendimento',
             'url'           => 'lancamentos',
-            'icon'          => 'far fa-file',
-        ],
-        [
-            'text'          => 'Relatório',
-            'url'           => 'servicos',
-            'icon'          => 'far fa-file',
+            'icon'          => 'fas fa-phone-alt',
         ],
         [
             'text'          => 'Estoque',
             'url'           => 'estoque',
             'icon'          => 'fa fa-cubes',
+        ],
+        [
+            'text'          => 'Relatórios',
+            'url'           => 'relatorios',
+            'icon'          => 'far fa-file',
         ],
 //        ['header' => 'account_settings'],
 //        [

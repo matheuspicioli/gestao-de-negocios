@@ -19,7 +19,8 @@ class Lancamento extends Model
     ];
     
     protected $appends = [
-        'preco_total'
+        'preco_total',
+        'items_string',
     ];
     
     public function usuario ()
@@ -32,6 +33,25 @@ class Lancamento extends Model
         return $this->belongsToMany(Item::class, 'lancamentos_items');
     }
     
+    public function getItemsStringAttribute ()
+    {
+        $items = '';
+        $total = $this->itens->count();
+        $count = 1;
+        
+        foreach ($this->itens as $item) {
+            if ($count === $total) {
+                $items .= "{$item->nome}";
+            } else {
+                $items .= "{$item->nome}, ";
+            }
+            
+            $count++;
+        }
+        
+        return $items;
+    }
+    
     public function getPrecoTotalAttribute ()
     {
         $total = 0;
@@ -40,6 +60,8 @@ class Lancamento extends Model
                 $total += $item->preco;
             }
         }
+        
+//        dd($total);
         
         return $total;
     }

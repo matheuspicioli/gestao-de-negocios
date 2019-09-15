@@ -123,6 +123,8 @@
                 }
             });
 
+            $('#items[]').select2();
+
             $('#produto_id').attr('disabled', true);
             $('#servico_id').attr('disabled', true);
 
@@ -138,7 +140,7 @@
                     $('#servico_id').attr('disabled', true);
                     $('#produto_id').attr('disabled', true);
                 }
-            })
-        })
+            });
+        });
     </script>
 @stop
