@@ -24,9 +24,9 @@
                         <button class="btn btn-box-tool" type="button" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
-                        <button class="btn btn-box-tool" type="button" data-widget="remove">
-                            <i class="fa fa-times"></i>
-                        </button>
+{{--                        <button class="btn btn-box-tool" type="button" data-widget="remove">--}}
+{{--                            <i class="fa fa-times"></i>--}}
+{{--                        </button>--}}
                     </div>
                 </div>
 
@@ -117,30 +117,66 @@
 @section('js')
     <script>
         $(function () {
+            var itensToApi = [];
+
             $('#produtos-table').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
                 }
             });
 
-            $('#items[]').select2();
+            $('.select2').select2();
 
-            $('#produto_id').attr('disabled', true);
-            $('#servico_id').attr('disabled', true);
+            $('#adicionar-item').on('click', function (event) {
+                // @todo TRABALHAR COM O ITEM PARA OBTER O VALOR
+                var item = null;
+                $.ajax('api/consultar-item/'+$('#item').val(), {
+                    type: 'GET',
+                    success: function (resultado, status, xhr) {
+                        item = resultado;
+                        var wrapper = $('#wrapper');
+                        var quantidade = $('#quantidade');
+                        var preco = 'R$ ' + `${parseFloat(item.preco * quantidade.val()).toFixed(2)}`.replace('.', ',');
+                        var precoUnitatio = 'R$ ' + `${parseFloat(item.preco).toFixed(2)}`.replace('.', ',');
 
-            $('#item').change(function (event) {
-                var value = event.target.value;
-                if (value === 'S') {
-                    $('#servico_id').attr('disabled', false);
-                    $('#produto_id').attr('disabled', true);
-                } else if (value === 'P') {
-                    $('#servico_id').attr('disabled', true);
-                    $('#produto_id').attr('disabled', false);
-                } else {
-                    $('#servico_id').attr('disabled', true);
-                    $('#produto_id').attr('disabled', true);
-                }
+                        var html = `<tr><td>${item.nome}</td><td>${quantidade.val()}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.preco}' data-quantidade='${quantidade.val()}'>${preco}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
+                        wrapper.prepend(html);
+                        quantidade.val(1);
+                        calcularPrecoTotal();
+                        itensToApi.push(item);
+                    },
+                    error: function (xhr, status, error) {
+                        window.alert('Ocorreu um erro ao cadastrar o item: '+error);
+                    }
+                });
             });
+
+            $('#wrapper').on('click', '.remover-item', function (event) {
+                // 1º PARENT = TD, 2º PARENT = TR
+                var isto = $(this);
+                isto.parent().parent().remove();
+                calcularPrecoTotal();
+                itensToApi = itensToApi.filter(function (item) {
+                    var id = parseInt(isto[0].dataset.id);
+                    if (item.id === id) {
+                        console.log('removendo item: '+item.nome+' da lista');
+                    }
+
+                    return item.id !== id;
+                });
+                console.log(itensToApi);
+            });
+
+            var calcularPrecoTotal = function() {
+                var total = 0;
+                var precos = $('.preco').each(function (index, value) {
+                    var valor = value.dataset.preco;
+                    var quantidade = value.dataset.quantidade;
+                    total += parseFloat(valor * quantidade);
+                });
+
+                $('#valor-total').html(`R$ ${total.toFixed(2)}`.replace('.', ','));
+            }
         });
     </script>
 @stop

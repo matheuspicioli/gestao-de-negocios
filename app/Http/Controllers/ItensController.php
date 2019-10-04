@@ -49,4 +49,9 @@ class ItensController extends Controller
         
         return redirect()->route('itens.listar');
     }
+    
+    public function get($id)
+    {
+        return Item::findOrFail($id);
+    }
 }

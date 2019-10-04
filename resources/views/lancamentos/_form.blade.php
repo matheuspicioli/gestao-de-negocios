@@ -1,34 +1,55 @@
 {!! Form::token() !!}
 
 <div class="row">
+    {{-- ===== FORMULÁRIO ===== --}}
     {!! Form::hidden('usuario_id', Auth::user()->id) !!}
+    {!! Form::hidden('tipo', 'SAIDA') !!}
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('quantidade', 'Quantidade') !!}
-            {!! Form::number('quantidade', 1, ['class' => 'form-control', 'max' => '50', 'min' => '1']) !!}
+            {!! Form::number('quantidade', 1, ['class' => 'form-control', 'max' => '50', 'min' => '1', 'id' => 'quantidade']) !!}
         </div>
     </div>
 
     <div class="col-xs-3">
         <div class="form-group">
-            {!! Form::label('items[]', 'Item') !!}
-            {!! Form::select('items[]', $itens, $itensSelected ?? null, ['class' => 'form-control', 'id' => 'items[]', 'multiple' => 'multiple']) !!}
+            {!! Form::label('item', 'Item') !!}
+            {!! Form::select('item', $itens, $itensSelected ?? null, ['class' => 'form-control select2', 'id' => 'item']) !!}
         </div>
     </div>
 
     <div class="col-xs-2">
-        {!! Form::label('tipo', 'Tipo do lançamento') !!}
-        <div class="form-group" style="">
-            <label class="radio-inline" for="tipo-entrada">
-                {!! Form::radio('tipo', 'ENTRADA', true, ['id' => 'tipo-entrada']) !!}
-                Entrada
-            </label>
-            <label class="radio-inline" for="tipo-saida">
-                {!! Form::radio('tipo', 'SAIDA', false, ['id' => 'tipo-saida']) !!}
-                Saída
-            </label>
+        <div class="form-group">
+            <button type="button" class="btn btn-xs btn-success" id="adicionar-item">
+                <i class="fa fa-plus"></i> Adicionar
+            </button>
         </div>
     </div>
+    {{-- ===== FORMULÁRIO ===== --}}
+
+    {{-- ===== LISTA ITENS ===== --}}
+    <div class="col-xs-6">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantidade</th>
+                    <th>Valor unitário</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="wrapper">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3" style="text-align: right;">TOTAL</th>
+                    <td colspan="1" style="text-align: left;" id="valor-total"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    {{-- ===== LISTA ITENS ===== --}}
 </div>
 
 <div class="row">
@@ -38,3 +59,7 @@
         </button>
     </div>
 </div>
+
+<template>
+
+</template>
