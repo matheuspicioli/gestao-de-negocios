@@ -174,6 +174,39 @@
 
                 $('#valor-total').html(`R$ ${total.toFixed(2)}`.replace('.', ','));
             }
+
+            var resetar = function () {
+                var wrapper = $('#wrapper');
+                wrapper.html('');
+                $('#valor-total').html('R$ 0');
+                $('#quantidade').val(1);
+            };
+
+            $('#salvar-lancamento').click(function (event) {
+                event.preventDefault();
+                if (itensToApi === []) {
+                    alert('Adicione algum item para salvar o pedido');
+                    return;
+                }
+
+                $.ajax('api/salvar-pedido', {
+                    type: 'POST',
+                    data: {
+                        itens: itensToApi,
+                        tipo: $('#tipo').val(),
+                        usuario_id: $('#usuario_id').val()
+                    },
+                    success: function (retorno, status, xhr) {
+                        alert(`Pedio cadastrado com sucesso!`);
+                        resetar();
+                    },
+                    error: function (xhr, status, error) {
+                        alert(`Ocorreu um erro: ${error}.`);
+                        console.log('SALVO COM SUCESSO!');
+                        console.log(xhr, status, error);
+                    }
+                })
+            });
         });
     </script>
 @stop

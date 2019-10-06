@@ -16,7 +16,6 @@ class CreateLancamentosTable extends Migration
         Schema::create('lancamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
             
-            $table->smallInteger('quantidade')->default(1);
             $table->enum('tipo', ['ENTRADA','SAIDA'])->default('ENTRADA');
             
             $table->bigInteger('usuario_id')->unsigned();

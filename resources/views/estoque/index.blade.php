@@ -62,6 +62,7 @@
                                     <tr>
                                         <td>{{ $item->nome }}</td>
                                         <td>{{ $item->codigo }}</td>
+                                        <td>{{ $item->quantidade }}</td>
                                         <td>R$ {{ number_format($item->preco, 2, ',', '.') }}</td>
                                         <td>{{ $item->tipo }}</td>
                                         <td width="10%">

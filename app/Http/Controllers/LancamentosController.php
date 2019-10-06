@@ -12,7 +12,7 @@ class LancamentosController extends Controller
     public function index()
     {
         $lancamentos    = Lancamento::where('usuario_id', Auth::user()->id)->get();
-        $itens          = Item::all()->pluck('nome', 'id')->toArray();
+        $itens          = Item::where('quantidade', '>=', 1)->get()->pluck('nome', 'id')->toArray();
         
         return view('lancamentos.index')
             ->with('lancamentos', $lancamentos)
@@ -26,11 +26,24 @@ class LancamentosController extends Controller
     
     public function store(Request $request)
     {
-        $lancamento = Lancamento::create($request->all());
-        $lancamento->itens()->attach($request->get('items'));
-        $lancamento->save();
+        $itens  = collect($request->get('itens'));
+        $lancamento = Lancamento::create([
+            'tipo'          => $request->get('tipo'),
+            'usuario_id'    => $request->get('usuario_id'),
+        ]);
+        $itens->each(function ($item) {
+            $itemEloquent = Item::findOrFail($item['id']);
+            $itemEloquent->quantidade -= $item['quantidade'];
+            $itemEloquent->save();
+        });
+    
+        $lancamento->itens()->attach($itens->map(function ($item) {
+            return $item['id'];
+        }));
         
-        return redirect()->route('lancamentos.listar');
+        return response()->json([
+            'all' => $request->all()
+        ]);
     }
     
     public function edit($id)

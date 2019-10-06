@@ -13,7 +13,6 @@ class Lancamento extends Model
     protected $table = 'lancamentos';
     
     protected $fillable = [
-        'quantidade',
         'tipo',
         'usuario_id',
     ];

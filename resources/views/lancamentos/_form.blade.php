@@ -1,9 +1,7 @@
-{!! Form::token() !!}
-
 <div class="row">
     {{-- ===== FORMULÁRIO ===== --}}
-    {!! Form::hidden('usuario_id', Auth::user()->id) !!}
-    {!! Form::hidden('tipo', 'SAIDA') !!}
+    {!! Form::hidden('usuario_id', Auth::user()->id, ['id' => 'usuario_id']) !!}
+    {!! Form::hidden('tipo', 'SAIDA', ['id' => 'tipo']) !!}
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('quantidade', 'Quantidade') !!}
@@ -54,7 +52,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <button type="submit" class="btn btn-primary pull-right">
+        <button type="button" class="btn btn-primary pull-right" id="salvar-lancamento">
             <i class="fa fa-save"></i> Salvar
         </button>
     </div>
