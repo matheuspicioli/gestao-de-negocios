@@ -16,6 +16,8 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
+            $table->string('codigo', 25)->unique();
+            $table->integer('quantidade')->unsigned();
             $table->decimal('preco', 10, 2);
             $table->enum('tipo', ['PRODUTO', 'SERVICO'])->default('SERVICO');
             

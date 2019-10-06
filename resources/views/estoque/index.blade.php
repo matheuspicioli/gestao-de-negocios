@@ -6,7 +6,7 @@
     <h1>Estoque</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#"><i class="fa fa-home"></i> Home</a>
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="active">
             <i class="fa fa-cubes"></i> Estoque</a>
@@ -51,6 +51,7 @@
                                 <thead>
                                 <tr>
                                     <th>Nome</th>
+                                    <th>Código</th>
                                     <th>Preço</th>
                                     <th>Tipo</th>
                                     <th>Ações</th>
@@ -60,6 +61,7 @@
                                 @foreach($itens as $item)
                                     <tr>
                                         <td>{{ $item->nome }}</td>
+                                        <td>{{ $item->codigo }}</td>
                                         <td>R$ {{ number_format($item->preco, 2, ',', '.') }}</td>
                                         <td>{{ $item->tipo }}</td>
                                         <td width="10%">
@@ -98,6 +100,17 @@
             $('#lancamentos-table').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+                }
+            });
+
+            var tipo = $('#tipo');
+            var quantidade = $('#quantidade');
+
+            tipo.change(function(event) {
+                if (tipo.val() === 'PRODUTO') {
+                    quantidade.attr('disabled', false);
+                } else {
+                    quantidade.attr('disabled', true);
                 }
             });
         })

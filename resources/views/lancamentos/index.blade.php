@@ -6,7 +6,7 @@
     <h1>Movimentações</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#"><i class="fa fa-home"></i> Home</a>
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="active">
             <i class="fa fa-home"></i> Movimentações</a>
@@ -128,14 +128,14 @@
             $('.select2').select2();
 
             $('#adicionar-item').on('click', function (event) {
-                // @todo TRABALHAR COM O ITEM PARA OBTER O VALOR
                 var item = null;
                 $.ajax('api/consultar-item/'+$('#item').val(), {
                     type: 'GET',
                     success: function (resultado, status, xhr) {
-                        item = resultado;
                         var wrapper = $('#wrapper');
                         var quantidade = $('#quantidade');
+                        item = resultado;
+                        item.quantidade = parseInt(quantidade.val());
                         var preco = 'R$ ' + `${parseFloat(item.preco * quantidade.val()).toFixed(2)}`.replace('.', ',');
                         var precoUnitatio = 'R$ ' + `${parseFloat(item.preco).toFixed(2)}`.replace('.', ',');
 
@@ -156,20 +156,17 @@
                 var isto = $(this);
                 isto.parent().parent().remove();
                 calcularPrecoTotal();
+
+                // ARRAY QUE É ENVIADO AO BACKEND
                 itensToApi = itensToApi.filter(function (item) {
                     var id = parseInt(isto[0].dataset.id);
-                    if (item.id === id) {
-                        console.log('removendo item: '+item.nome+' da lista');
-                    }
-
                     return item.id !== id;
                 });
-                console.log(itensToApi);
             });
 
             var calcularPrecoTotal = function() {
                 var total = 0;
-                var precos = $('.preco').each(function (index, value) {
+                $('.preco').each(function (index, value) {
                     var valor = value.dataset.preco;
                     var quantidade = value.dataset.quantidade;
                     total += parseFloat(valor * quantidade);

@@ -6,7 +6,7 @@
     <h1>Listagem de <small>Itens</small></h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#"><i class="fa fa-home"></i> Home</a>
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="active">
             <i class="fa fa-list"></i> Itens</a>
@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-success">
-                <div class="box-header">
+                <div class="box-header with-border">
                     <h3 class="box-title">Cadastro de item</h3>
                 </div>
 
@@ -49,7 +49,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-primary">
-                <div class="box-header">
+                <div class="box-header with-border">
                     <h3 class="box-title">Listagem</h3>
                 </div>
 
@@ -59,7 +59,9 @@
                             <table id="itens-table" class="table table-bordered table-hover dataTable" role="grid">
                                 <thead>
                                     <tr>
+                                        <th>Código</th>
                                         <th>Nome</th>
+                                        <th>Quantidade</th>
                                         <th>Preço</th>
                                         <th>Tipo</th>
                                         <th>Ações</th>
@@ -68,7 +70,9 @@
                                 <tbody>
                                 @foreach($itens as $item)
                                     <tr>
+                                        <td>{{ $item->codigo }}</td>
                                         <td>{{ $item->nome }}</td>
+                                        <td>{{ $item->quantidade }}</td>
                                         <td>R$ {{ number_format($item->preco, 2, ',', '.') }}</td>
                                         <td>{{ $item->tipo }}</td>
                                         <td width="10%">
