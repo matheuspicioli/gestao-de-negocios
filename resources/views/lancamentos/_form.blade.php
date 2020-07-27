@@ -2,12 +2,10 @@
     {{-- ===== FORMULÁRIO ===== --}}
     {!! Form::hidden('usuario_id', Auth::user()->id, ['id' => 'usuario_id']) !!}
     {!! Form::hidden('tipo', 'SAIDA', ['id' => 'tipo']) !!}
-
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('quantidade', 'Quantidade') !!}
             {!! Form::number('quantidade', 1, ['class' => 'form-control', 'max' => '50', 'min' => '1', 'id' => 'quantidade']) !!}
-            <span id="label-error-quantidade" class="help-block" style="display: none;"></span>
         </div>
     </div>
 
@@ -32,8 +30,8 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>Quantidade</th>
                     <th>Item</th>
+                    <th>Quantidade</th>
                     <th>Valor unitário</th>
                     <th>Valor</th>
                     <th>Ações</th>
