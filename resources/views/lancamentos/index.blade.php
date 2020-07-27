@@ -9,7 +9,7 @@
             <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="active">
-            <i class="fa fa-home"></i> Movimentações</a>
+            <i class="fa fa-home"></i> Movimentações
         </li>
     </ol>
 @stop
@@ -19,14 +19,14 @@
         <div class="col-xs-12">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Cadastro de lançamento</h3>
+                    <h3 class="box-title">Lançamento de pedidos</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" type="button" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
-{{--                        <button class="btn btn-box-tool" type="button" data-widget="remove">--}}
-{{--                            <i class="fa fa-times"></i>--}}
-{{--                        </button>--}}
+                        {{--                        <button class="btn btn-box-tool" type="button" data-widget="remove">--}}
+                        {{--                            <i class="fa fa-times"></i>--}}
+                        {{--                        </button>--}}
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Listagem</h3>
+                    <h3 class="box-title">Pedidos</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" type="button" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -64,42 +64,42 @@
                             <table id="produtos-table" class="table table-bordered table-hover dataTable" role="grid">
                                 <thead>
                                 <tr>
-                                    <th>Itens</th>
-                                    <th>Quantidade</th>
-                                    <th>Tipo</th>
-                                    <th>Preço total</th>
+                                    <th>#</th>
+                                    <th>Produtos</th>
+                                    <th>Transação</th>
+                                    <th>Valor total</th>
                                     <th>Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($lancamentos as $lancamento)
-                                        <tr>
-                                            <td>
-                                                @foreach($lancamento->itens as $item)
-                                                    {{ $item->nome }} @if (!$loop->last), @endif
-                                                @endforeach
-                                            </td>
-                                            <td>{{ $lancamento->quantidade }}</td>
-                                            <td>{{ $lancamento->tipo }}</td>
-                                            <td>
-                                                R$ {{ number_format($lancamento->preco_total, 2, ',', '.') }}
-                                            </td>
-                                            <td width="10%">
-                                                <a href="{{ route('lancamentos.editar', ['id' => $lancamento->id]) }}"
-                                                   class="btn btn-xs btn-warning">
-                                                    <i class="fa fa-pencil-alt"></i>
-                                                </a>
+                                @foreach($entries as $entry)
+                                    <tr>
+                                        <td>
+                                            {{ $entry->id }}
+                                        </td>
+                                        <td>
+                                            {!! $entry->itemsString !!}
+                                        </td>
+                                        <td>{{ $entry->transaction }}</td>
+                                        <td>
+                                            R$ {{ number_format($entry->total_price, 2, ',', '.') }}
+                                        </td>
+                                        <td width="10%">
+                                            <a href="{{ route('lancamentos.editar', ['id' => $entry->id]) }}"
+                                               class="btn btn-xs btn-warning">
+                                                <i class="fa fa-pencil-alt"></i>
+                                            </a>
 
-                                                <form style="display: inline-block" action="{{ route('lancamentos.deletar', ['id' => $lancamento->id]) }}" method="POST">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('delete') }}
-                                                    <button type="submit" class="btn btn-xs btn-danger">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            <form style="display: inline-block" action="{{ route('lancamentos.deletar', ['id' => $entry->id]) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('delete') }}
+                                                <button type="submit" class="btn btn-xs btn-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -117,7 +117,7 @@
 @section('js')
     <script>
         $(function () {
-            var itensToApi = [];
+            let itensToApi = [];
 
             $('#produtos-table').DataTable({
                 "language": {
@@ -133,15 +133,15 @@
                     type: 'GET',
                     success: function (resultado, status, xhr) {
                         var wrapper = $('#wrapper');
-                        var quantidade = $('#quantidade');
+                        var quantity = $('#quantidade');
                         item = resultado;
-                        item.quantidade = parseInt(quantidade.val());
-                        var preco = 'R$ ' + `${parseFloat(item.preco * quantidade.val()).toFixed(2)}`.replace('.', ',');
-                        var precoUnitatio = 'R$ ' + `${parseFloat(item.preco).toFixed(2)}`.replace('.', ',');
+                        item.quantity = parseInt(quantity.val());
+                        var price = 'R$ ' + `${parseFloat(item.value * quantity.val()).toFixed(2)}`.replace('.', ',');
+                        var precoUnitatio = 'R$ ' + `${parseFloat(item.value).toFixed(2)}`.replace('.', ',');
 
-                        var html = `<tr><td>${item.nome}</td><td>${quantidade.val()}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.preco}' data-quantidade='${quantidade.val()}'>${preco}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
+                        var html = `<tr><td>${quantity.val()}</td><td>${item.name}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.value}' data-quantidade='${quantity.val()}'>${price}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
                         wrapper.prepend(html);
-                        quantidade.val(1);
+                        quantity.val(1);
                         calcularPrecoTotal();
                         itensToApi.push(item);
                     },
@@ -166,10 +166,10 @@
 
             var calcularPrecoTotal = function() {
                 var total = 0;
-                $('.preco').each(function (index, value) {
-                    var valor = value.dataset.preco;
-                    var quantidade = value.dataset.quantidade;
-                    total += parseFloat(valor * quantidade);
+                $('.preco').each(function (index, item) {
+                    var value = item.dataset.preco;
+                    var quantity = item.dataset.quantidade;
+                    total += parseFloat(value * quantity);
                 });
 
                 $('#valor-total').html(`R$ ${total.toFixed(2)}`.replace('.', ','));
@@ -180,6 +180,7 @@
                 wrapper.html('');
                 $('#valor-total').html('R$ 0');
                 $('#quantidade').val(1);
+                itensToApi = []
             };
 
             $('#salvar-lancamento').click(function (event) {
@@ -193,17 +194,15 @@
                     type: 'POST',
                     data: {
                         itens: itensToApi,
-                        tipo: $('#tipo').val(),
-                        usuario_id: $('#usuario_id').val()
+                        type: $('#type').val(),
+                        user_id: $('#user_id').val()
                     },
-                    success: function (retorno, status, xhr) {
+                    success: function (response) {
                         alert(`Pedio cadastrado com sucesso!`);
-                        resetar();
+                        window.location = window.location
                     },
                     error: function (xhr, status, error) {
-                        alert(`Ocorreu um erro: ${error}.`);
-                        console.log('SALVO COM SUCESSO!');
-                        console.log(xhr, status, error);
+                        alert(xhr.responseJSON.message)
                     }
                 })
             });

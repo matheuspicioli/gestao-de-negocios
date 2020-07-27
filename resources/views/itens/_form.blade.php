@@ -3,36 +3,36 @@
 <div class="row">
     <div class="col-xs-2">
         <div class="form-group">
-            {!! Form::label('tipo', 'Tipo') !!}
-            {!! Form::select('tipo', ['PRODUTO' => 'Produto', 'SERVICO' => 'Serviço'], 'PRODUTO', ['class' => 'form-control']) !!}
+            {!! Form::label('type', 'Tipo') !!}
+            {!! Form::select('type', ['PRODUTO' => 'Produto', 'SERVICO' => 'Serviço'], 'PRODUTO', ['class' => 'form-control']) !!}
         </div>
     </div>
 
     <div class="col-xs-2">
         <div class="form-group">
-            {!! Form::label('quantidade', 'Quantidade') !!}
-            {!! Form::number('quantidade', $item->quantidade ?? null, ['class' => 'form-control', 'id' => 'quantidade']) !!}
+            {!! Form::label('quantity', 'Quantidade') !!}
+            {!! Form::number('quantity', $item->quantity ?? null, ['class' => 'form-control', 'id' => 'quantidade']) !!}
         </div>
     </div>
 
     <div class="col-xs-3">
         <div class="form-group">
-            {!! Form::label('codigo', 'Código') !!}
-            {!! Form::text('codigo', $item->codigo ?? null, ['class' => 'form-control']) !!}
+            {!! Form::label('code', 'Código') !!}
+            {!! Form::text('code', $item->code ?? null, ['class' => 'form-control']) !!}
         </div>
     </div>
 
     <div class="col-xs-3">
         <div class="form-group">
-            {!! Form::label('nome', 'Nome') !!}
-            {!! Form::text('nome', $item->nome ?? null, ['class' => 'form-control']) !!}
+            {!! Form::label('name', 'Nome') !!}
+            {!! Form::text('name', $item->name ?? null, ['class' => 'form-control']) !!}
         </div>
     </div>
 
     <div class="col-xs-2">
         <div class="form-group">
-            {!! Form::label('preco', 'Preço') !!}
-            {!! Form::text('preco', $item->preco ?? null, ['class' => 'form-control']) !!}
+            {!! Form::label('value', 'valor') !!}
+            {!! Form::text('value', $item->value ?? null, ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>

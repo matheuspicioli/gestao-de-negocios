@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Models\Lancamento;
+use App\Models\Entry;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,9 +40,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function lancamentos ()
     {
-        return $this->hasMany(Lancamento::class, 'produto_id', 'id');
+        return $this->hasMany(Entry::class, 'produto_id', 'id');
     }
 }

@@ -9,7 +9,7 @@
             <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="active">
-            <i class="fa fa-list"></i> Itens</a>
+            <i class="fa fa-list"></i> Itens
         </li>
     </ol>
 @stop
@@ -62,7 +62,7 @@
                                         <th>Código</th>
                                         <th>Nome</th>
                                         <th>Quantidade</th>
-                                        <th>Preço</th>
+                                        <th>Valor</th>
                                         <th>Tipo</th>
                                         <th>Ações</th>
                                     </tr>
@@ -70,11 +70,11 @@
                                 <tbody>
                                 @foreach($itens as $item)
                                     <tr>
-                                        <td>{{ $item->codigo }}</td>
-                                        <td>{{ $item->nome }}</td>
-                                        <td>{{ $item->quantidade }}</td>
-                                        <td>R$ {{ number_format($item->preco, 2, ',', '.') }}</td>
-                                        <td>{{ $item->tipo }}</td>
+                                        <td>{{ $item->code }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>R$ {{ number_format($item->value, 2, ',', '.') }}</td>
+                                        <td>{{ $item->type }}</td>
                                         <td width="10%">
                                             <a href="{{ route('itens.editar', ['id' => $item->id]) }}"
                                                class="btn btn-xs btn-warning">

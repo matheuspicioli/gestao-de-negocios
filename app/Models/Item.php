@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Item extends Model
 {
     use SoftDeletes;
-    
+
     protected $table = 'items';
-    
+
     protected $fillable = [
-        'nome',
-        'codigo',
-        'quantidade',
-        'preco',
-        'tipo',
+        'name',
+        'code',
+        'quantity',
+        'value',
+        'type',
     ];
-    
-    public function lancamentos ()
+
+    public function entries ()
     {
-        return $this->belongsToMany(Item::class, 'lancamentos_items');
+        return $this->belongsToMany(Entry::class, 'entries_items');
     }
 }

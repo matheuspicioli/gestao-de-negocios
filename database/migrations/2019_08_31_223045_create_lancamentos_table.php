@@ -13,16 +13,16 @@ class CreateLancamentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('lancamentos', function (Blueprint $table) {
+        Schema::create('entries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
-            $table->enum('tipo', ['ENTRADA','SAIDA'])->default('ENTRADA');
-            
-            $table->bigInteger('usuario_id')->unsigned();
-            $table->foreign('usuario_id')
+
+            $table->enum('transaction', ['ENTRADA','SAIDA'])->default('ENTRADA');
+
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +35,6 @@ class CreateLancamentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lancamnetos');
+        Schema::dropIfExists('entries');
     }
 }

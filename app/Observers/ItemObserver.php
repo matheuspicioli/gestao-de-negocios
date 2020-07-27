@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Item;
-use App\Models\Relatorio;
+use App\Models\Report;
 
 class ItemObserver
 {
@@ -16,15 +16,15 @@ class ItemObserver
      */
     public function created (Item $item)
     {
-        $preco = 'R$ '.number_format($item->preco, 2, ',', '.');
-        Relatorio::create([
-            'classe'    => Item::class,
-            'classe_id' => $item->id,
-            'evento'    => 'created',
-            'dados'     => "Nome: {$item->nome}, preço: {$preco}, tipo: {$item->tipo}",
+        $price = 'R$ '.number_format($item->price, 2, ',', '.');
+        Report::create([
+            'class'    => Item::class,
+            'class_id' => $item->id,
+            'event'    => 'created',
+            'data'     => "Nome: {$item->name}, preço: {$price}, tipo: {$item->type}",
         ]);
     }
-    
+
     /**
      * Handle the item "updated" event.
      *
@@ -34,15 +34,15 @@ class ItemObserver
      */
     public function updated (Item $item)
     {
-        $preco = 'R$ '.number_format($item->preco, 2, ',', '.');
-        Relatorio::create([
-            'classe'    => Item::class,
-            'classe_id' => $item->id,
-            'evento'    => 'updated',
-            'dados'     => "Nome: {$item->nome}, preço: {$preco}, tipo: {$item->tipo}",
+        $price = 'R$ '.number_format($item->price, 2, ',', '.');
+        Report::create([
+            'class'    => Item::class,
+            'class_id' => $item->id,
+            'event'    => 'updated',
+            'data'     => "Nome: {$item->name}, preço: {$price}, tipo: {$item->type}",
         ]);
     }
-    
+
     /**
      * Handle the item "deleted" event.
      *
@@ -52,15 +52,15 @@ class ItemObserver
      */
     public function deleted (Item $item)
     {
-        $preco = 'R$ '.number_format($item->preco, 2, ',', '.');
-        Relatorio::create([
-            'classe'    => Item::class,
-            'classe_id' => $item->id,
-            'evento'    => 'deleted',
-            'dados'     => "Nome: {$item->nome}, preço: {$preco}, tipo: {$item->tipo}",
+        $price = 'R$ '.number_format($item->price, 2, ',', '.');
+        Report::create([
+            'class'    => Item::class,
+            'class_id' => $item->id,
+            'event'    => 'deleted',
+            'data'     => "Nome: {$item->name}, preço: {price}, tipo: {$item->type}",
         ]);
     }
-    
+
     /**
      * Handle the item "restored" event.
      *
@@ -72,7 +72,7 @@ class ItemObserver
     {
         //
     }
-    
+
     /**
      * Handle the item "force deleted" event.
      *

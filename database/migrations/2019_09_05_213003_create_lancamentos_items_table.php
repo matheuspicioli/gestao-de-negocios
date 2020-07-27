@@ -13,10 +13,11 @@ class CreateLancamentosItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lancamentos_items', function (Blueprint $table) {
+        Schema::create('entries_items', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedSmallInteger('quantidade');
+            $table->unsignedSmallInteger('quantity');
+
             $table->bigInteger('item_id')->unsigned();
             $table->foreign('item_id')
                 ->references('id')
@@ -27,9 +28,7 @@ class CreateLancamentosItemsTable extends Migration
             $table->bigInteger('lancamento_id')->unsigned();
             $table->foreign('lancamento_id')
                 ->references('id')
-                ->on('lancamentos')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->on('entries');
 
             $table->timestamps();
         });
@@ -42,6 +41,6 @@ class CreateLancamentosItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lancamentos_items');
+        Schema::dropIfExists('entries_items');
     }
 }

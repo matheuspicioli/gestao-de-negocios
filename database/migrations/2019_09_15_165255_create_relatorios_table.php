@@ -13,17 +13,17 @@ class CreateRelatoriosTable extends Migration
      */
     public function up()
     {
-        Schema::create('relatorios', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('classe');
-            $table->bigInteger('classe_id');
-            $table->enum('evento', ['created','updated','deleted']);
-            $table->longText('dados');
-        
+            $table->string('class');
+            $table->bigInteger('class_id');
+            $table->enum('event', ['created','updated','deleted']);
+            $table->longText('data');
+
             $table->timestamps();
             $table->softDeletes();
         });
-    
+
     }
 
     /**
@@ -33,6 +33,6 @@ class CreateRelatoriosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relatorios');
+        Schema::dropIfExists('reports');
     }
 }

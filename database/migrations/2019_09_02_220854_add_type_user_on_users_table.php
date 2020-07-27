@@ -14,7 +14,7 @@ class AddTypeUserOnUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('tipo', ['ADMIN', 'COMUM'])->default('COMUM');
+            $table->enum('type', ['ADMIN', 'COMUM'])->default('COMUM');
         });
     }
 
@@ -26,7 +26,7 @@ class AddTypeUserOnUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('type');
         });
     }
 }

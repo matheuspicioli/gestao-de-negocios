@@ -2,66 +2,66 @@
 
 namespace App\Observers;
 
-use App\Models\Lancamento;
-use App\Models\Relatorio;
+use App\Models\Entry;
+use App\Models\Report;
 
 class LancamentoObserver
 {
     /**
      * Handle the lancamento "created" event.
      *
-     * @param  \App\Models\Lancamento  $lancamento
+     * @param Entry $entry
      * @return void
      */
-    public function created(Lancamento $lancamento)
+    public function created(Entry $entry)
     {
-        Relatorio::create([
-            'classe'    => Lancamento::class,
-            'classe_id' => $lancamento->id,
-            'evento'    => 'created',
-            'dados'     => "Quantidade (cada): {$lancamento->quantidade}, tipo: {$lancamento->tipo}",
+        Report::create([
+            'class'    => Entry::class,
+            'class_id' => $entry->id,
+            'event'    => 'created',
+            'data'     => "Quantidade (cada): {$entry->quantity}, transação: {$entry->transaction}",
         ]);
     }
 
     /**
      * Handle the lancamento "updated" event.
      *
-     * @param  \App\Models\Lancamento  $lancamento
+     * @param  \App\Models\Entry  $entry
      * @return void
      */
-    public function updated(Lancamento $lancamento)
+    public function updated(Entry $entry)
     {
-        Relatorio::create([
-            'classe'    => Lancamento::class,
-            'classe_id' => $lancamento->id,
-            'evento'    => 'updated',
-            'dados'     => "Quantidade (cada): {$lancamento->quantidade}, tipo: {$lancamento->tipo}",
+        Report::create([
+            'class'    => Entry::class,
+            'class_id' => $entry->id,
+            'event'    => 'updated',
+            'data'     => "Quantidade (cada): {$entry->quantity}, transaction: {$entry->transaction}",
         ]);
     }
 
     /**
      * Handle the lancamento "deleted" event.
      *
-     * @param  \App\Models\Lancamento  $lancamento
+     * @param  \App\Models\Entry  $entry
      * @return void
      */
-    public function deleted(Lancamento $lancamento)
+    public function deleted(Entry $entry)
     {
-        Relatorio::create([
-            'classe'    => Lancamento::class,
-            'classe_id' => $lancamento->id,
-            'evento'    => 'deleted',
-            'dados'     => "Quantidade (cada): {$lancamento->quantidade}, tipo: {$lancamento->tipo}",
+        Report::create([
+            'class'    => Entry::class,
+            'class_id' => $entry->id,
+            'event'    => 'deleted',
+            'data'     => "Quantidade (cada): {$entry->quantity}, transaction: {$entry->transaction}",
         ]);
     }
 
     /**
      * Handle the lancamento "restored" event.
      *
-     * @param  \App\Models\Lancamento  $lancamento
+     * @param  \App\Models\Entry  $lancamento
      * @return void
      */
-    public function restored(Lancamento $lancamento)
+    public function restored(Entry $lancamento)
     {
         //
     }
@@ -69,10 +69,10 @@ class LancamentoObserver
     /**
      * Handle the lancamento "force deleted" event.
      *
-     * @param  \App\Models\Lancamento  $lancamento
+     * @param  \App\Models\Entry  $lancamento
      * @return void
      */
-    public function forceDeleted(Lancamento $lancamento)
+    public function forceDeleted(Entry $lancamento)
     {
         //
     }
