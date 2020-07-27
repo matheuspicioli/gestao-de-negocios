@@ -15,21 +15,22 @@ class CreateLancamentosItemsTable extends Migration
     {
         Schema::create('lancamentos_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
+
+            $table->unsignedSmallInteger('quantidade');
             $table->bigInteger('item_id')->unsigned();
             $table->foreign('item_id')
                 ->references('id')
                 ->on('items')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-    
+
             $table->bigInteger('lancamento_id')->unsigned();
             $table->foreign('lancamento_id')
                 ->references('id')
                 ->on('lancamentos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            
+
             $table->timestamps();
         });
     }

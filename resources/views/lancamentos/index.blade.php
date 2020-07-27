@@ -9,7 +9,7 @@
             <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="active">
-            <i class="fa fa-home"></i> Movimentações</a>
+            <i class="fa fa-home"></i> Movimentações
         </li>
     </ol>
 @stop
@@ -19,7 +19,7 @@
         <div class="col-xs-12">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Cadastro de lançamento</h3>
+                    <h3 class="box-title">Lançamento de pedidos</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" type="button" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -47,7 +47,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Listagem</h3>
+                    <h3 class="box-title">Pedidos</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" type="button" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -64,10 +64,10 @@
                             <table id="produtos-table" class="table table-bordered table-hover dataTable" role="grid">
                                 <thead>
                                 <tr>
-                                    <th>Itens</th>
-                                    <th>Quantidade</th>
-                                    <th>Tipo</th>
-                                    <th>Preço total</th>
+                                    <th>#</th>
+                                    <th>Produtos</th>
+                                    <th>Transação</th>
+                                    <th>Valor total</th>
                                     <th>Ações</th>
                                 </tr>
                                 </thead>
@@ -75,11 +75,11 @@
                                     @foreach($lancamentos as $lancamento)
                                         <tr>
                                             <td>
-                                                @foreach($lancamento->itens as $item)
-                                                    {{ $item->nome }} @if (!$loop->last), @endif
-                                                @endforeach
+                                                {{ $lancamento->id }}
                                             </td>
-                                            <td>{{ $lancamento->quantidade }}</td>
+                                            <td>
+                                                {!! $lancamento->itemsString !!}
+                                            </td>
                                             <td>{{ $lancamento->tipo }}</td>
                                             <td>
                                                 R$ {{ number_format($lancamento->preco_total, 2, ',', '.') }}
@@ -117,7 +117,7 @@
 @section('js')
     <script>
         $(function () {
-            var itensToApi = [];
+            let itensToApi = [];
 
             $('#produtos-table').DataTable({
                 "language": {
@@ -139,7 +139,7 @@
                         var preco = 'R$ ' + `${parseFloat(item.preco * quantidade.val()).toFixed(2)}`.replace('.', ',');
                         var precoUnitatio = 'R$ ' + `${parseFloat(item.preco).toFixed(2)}`.replace('.', ',');
 
-                        var html = `<tr><td>${item.nome}</td><td>${quantidade.val()}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.preco}' data-quantidade='${quantidade.val()}'>${preco}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
+                        var html = `<tr><td>${quantidade.val()}</td><td>${item.nome}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.preco}' data-quantidade='${quantidade.val()}'>${preco}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
                         wrapper.prepend(html);
                         quantidade.val(1);
                         calcularPrecoTotal();
@@ -180,6 +180,7 @@
                 wrapper.html('');
                 $('#valor-total').html('R$ 0');
                 $('#quantidade').val(1);
+                itensToApi = []
             };
 
             $('#salvar-lancamento').click(function (event) {
@@ -196,14 +197,12 @@
                         tipo: $('#tipo').val(),
                         usuario_id: $('#usuario_id').val()
                     },
-                    success: function (retorno, status, xhr) {
+                    success: function (response) {
                         alert(`Pedio cadastrado com sucesso!`);
-                        resetar();
+                        window.location = window.location
                     },
                     error: function (xhr, status, error) {
-                        alert(`Ocorreu um erro: ${error}.`);
-                        console.log('SALVO COM SUCESSO!');
-                        console.log(xhr, status, error);
+                        alert(xhr.responseJSON.message)
                     }
                 })
             });

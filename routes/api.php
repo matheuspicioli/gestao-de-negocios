@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('consultar-item/{id}', 'ItensController@get');
-Route::post('salvar-pedido', 'Lancamentoscontroller@store');
+Route::post('salvar-pedido', 'LancamentosController@store');

@@ -15,12 +15,12 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome');
-            $table->string('codigo', 25)->unique();
-            $table->integer('quantidade')->unsigned();
-            $table->decimal('preco', 10, 2);
-            $table->enum('tipo', ['PRODUTO', 'SERVICO'])->default('SERVICO');
-            
+            $table->string('name');
+            $table->string('code', 25)->unique();
+            $table->integer('qauntity')->unsigned();
+            $table->decimal('value', 10, 2);
+            $table->enum('type', ['PRODUTO', 'SERVICO'])->default('SERVICO');
+
             $table->timestamps();
             $table->softDeletes();
         });
