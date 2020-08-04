@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('code', 25)->unique();
-            $table->integer('qauntity')->unsigned();
+            $table->integer('quantity')->unsigned();
             $table->decimal('value', 10, 2);
             $table->enum('type', ['PRODUTO', 'SERVICO'])->default('SERVICO');
 

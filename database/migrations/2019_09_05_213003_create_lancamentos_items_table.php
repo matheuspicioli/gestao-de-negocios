@@ -21,12 +21,10 @@ class CreateLancamentosItemsTable extends Migration
             $table->bigInteger('item_id')->unsigned();
             $table->foreign('item_id')
                 ->references('id')
-                ->on('items')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->on('items');
 
-            $table->bigInteger('lancamento_id')->unsigned();
-            $table->foreign('lancamento_id')
+            $table->bigInteger('entry_id')->unsigned();
+            $table->foreign('entry_id')
                 ->references('id')
                 ->on('entries');
 
