@@ -19,7 +19,7 @@ class LancamentosController extends Controller
         $entries    = Entry::where('user_id', Auth::user()->id)->get();
         $itens      = collect(['Selecione um produto']);
         $itens      = $itens->union(
-            Item::where('quantity', '>=', 1)->get()->pluck('name', 'id')->toArray(),
+            Item::where('quantity', '>=', 1)->get()->pluck('code', 'id')->toArray()
         )->toArray();
 
         return view('lancamentos.index')
