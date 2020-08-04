@@ -17,5 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('consultar-item/{id}', 'ItensController@get');
-Route::post('salvar-pedido', 'LancamentosController@store');
+Route::get('item/{id}', 'ItensController@get');
+Route::post('save-entry', 'EntriesController@store');

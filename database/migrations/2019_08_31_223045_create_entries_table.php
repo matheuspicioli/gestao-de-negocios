@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRelatoriosTable extends Migration
+class CreateEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,20 @@ class CreateRelatoriosTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('entries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('class');
-            $table->bigInteger('class_id');
-            $table->enum('event', ['created','updated','deleted']);
-            $table->longText('data');
+
+            $table->enum('transaction', ['ENTRADA','SAIDA'])->default('ENTRADA');
+            $table->smallInteger('payment_id')->unsigned();
+
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
 
             $table->timestamps();
             $table->softDeletes();
         });
-
     }
 
     /**
@@ -33,6 +36,6 @@ class CreateRelatoriosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('entries');
     }
 }

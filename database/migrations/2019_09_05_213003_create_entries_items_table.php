@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLancamentosItemsTable extends Migration
+class CreateEntriesItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateLancamentosItemsTable extends Migration
         Schema::create('entries_items', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedSmallInteger('quantity');
+            $table->smallInteger('quantity')->unsigned();
 
             $table->bigInteger('item_id')->unsigned();
             $table->foreign('item_id')

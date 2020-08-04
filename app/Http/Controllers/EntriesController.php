@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaymentType;
 use App\Http\Requests\StoreLancamentoRequest;
 use App\Models\Entry;
 use App\Models\Item;
@@ -12,10 +13,11 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class LancamentosController extends Controller
+class EntriesController extends Controller
 {
     public function index()
     {
+        $payments   = PaymentType::toSelectArray();
         $entries    = Entry::where('user_id', Auth::user()->id)->get();
         $itens      = collect(['Selecione um produto']);
         $itens      = $itens->union(
@@ -24,6 +26,7 @@ class LancamentosController extends Controller
 
         return view('lancamentos.index')
             ->with('entries', $entries)
+            ->with('payments', $payments)
             ->with('itens', $itens);
     }
 
@@ -42,15 +45,18 @@ class LancamentosController extends Controller
             $entry = Entry::create([
                 'type'       => $request->get('type'),
                 'user_id'    => $request->get('user_id'),
+                'payment_id' => PaymentType::fromValue((int)$request->get('payment_id'))->value,
             ]);
 
-            $itens->each(function ($item) {
+            $itens->each(function (array $item) use ($entry) {
                 $itemEloquent = Item::findOrFail($item['id']);
+
                 if ($item['quantity'] > $itemEloquent->quantity) {
                     throw new HttpResponseException(response()->json([
                         'message' => 'Não possui quantidade em estoque'
                     ], Response::HTTP_BAD_REQUEST));
                 }
+
                 $itemEloquent->quantity -= $item['quantity'];
                 $itemEloquent->save();
             });
@@ -70,6 +76,10 @@ class LancamentosController extends Controller
             DB::rollBack();
             throw $exception;
         }
+    }
+
+    public function payments() {
+        return response()->json(PaymentType::toSelectArray(), Response::HTTP_OK);
     }
 
     public function edit($id)

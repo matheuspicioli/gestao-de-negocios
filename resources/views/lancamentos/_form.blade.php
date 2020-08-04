@@ -9,18 +9,25 @@
         </div>
     </div>
 
-    <div class="col-xs-3">
+    <div class="col-xs-2">
         <div class="form-group">
             {!! Form::label('item', 'Item') !!}
             {!! Form::select('item', $itens, $itensSelected ?? null, ['class' => 'form-control select2', 'id' => 'item']) !!}
         </div>
     </div>
 
-    <div class="col-xs-2">
+    <div class="col-xs-1">
         <div class="form-group">
             <button type="button" class="btn btn-xs btn-success" id="adicionar-item">
                 <i class="fa fa-plus"></i> Adicionar
             </button>
+        </div>
+    </div>
+
+    <div class="col-xs-2">
+        <div class="form-group">
+            {!! Form::label('payment_id', 'Pagamento') !!}
+            {!! Form::select('payment_id', $payments, null, ['class' => 'form-control select2', 'id' => 'payment_id']) !!}
         </div>
     </div>
     {{-- ===== FORMULÁRIO ===== --}}

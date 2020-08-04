@@ -66,6 +66,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Produtos</th>
+                                    <th>Pagamento</th>
                                     <th>Transação</th>
                                     <th>Valor total</th>
                                     <th>Ações</th>
@@ -79,6 +80,9 @@
                                         </td>
                                         <td>
                                             {!! $entry->itemsString !!}
+                                        </td>
+                                        <td>
+                                            {{ $entry->payment }}
                                         </td>
                                         <td>{{ $entry->transaction }}</td>
                                         <td>
@@ -128,18 +132,20 @@
             $('.select2').select2();
 
             $('#adicionar-item').on('click', function (event) {
-                var item = null;
-                $.ajax('api/consultar-item/'+$('#item').val(), {
+                let item = null;
+                $.ajax('api/item/'+$('#item').val(), {
                     type: 'GET',
                     success: function (resultado, status, xhr) {
-                        var wrapper = $('#wrapper');
-                        var quantity = $('#quantidade');
+                        let wrapper = $('#wrapper')
+                        let quantity = $('#quantidade')
+
                         item = resultado;
                         item.quantity = parseInt(quantity.val());
-                        var price = 'R$ ' + `${parseFloat(item.value * quantity.val()).toFixed(2)}`.replace('.', ',');
-                        var precoUnitatio = 'R$ ' + `${parseFloat(item.value).toFixed(2)}`.replace('.', ',');
 
-                        var html = `<tr><td>${quantity.val()}</td><td>${item.name}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.value}' data-quantidade='${quantity.val()}'>${price}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
+                        let price = 'R$ ' + `${parseFloat(item.value * quantity.val()).toFixed(2)}`.replace('.', ',');
+                        let precoUnitatio = 'R$ ' + `${parseFloat(item.value).toFixed(2)}`.replace('.', ',');
+                        let html = `<tr><td>${quantity.val()}</td><td>${item.name}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.value}' data-quantidade='${quantity.val()}'>${price}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
+
                         wrapper.prepend(html);
                         quantity.val(1);
                         calcularPrecoTotal();
@@ -190,12 +196,13 @@
                     return;
                 }
 
-                $.ajax('api/salvar-pedido', {
+                $.ajax('api/save-entry', {
                     type: 'POST',
                     data: {
                         itens: itensToApi,
                         type: $('#type').val(),
-                        user_id: $('#user_id').val()
+                        user_id: $('#user_id').val(),
+                        payment_id: $('#payment_id').children("option:selected").val()
                     },
                     success: function (response) {
                         alert(`Pedio cadastrado com sucesso!`);

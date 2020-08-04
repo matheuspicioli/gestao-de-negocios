@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLancamentosTable extends Migration
+class CreateReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateLancamentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            $table->enum('transaction', ['ENTRADA','SAIDA'])->default('ENTRADA');
-
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
+            $table->string('class');
+            $table->bigInteger('class_id');
+            $table->enum('event', ['created','updated','deleted']);
+            $table->longText('data');
 
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**
@@ -35,6 +33,6 @@ class CreateLancamentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('reports');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentType;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class Entry extends Model
     protected $fillable = [
         'transaction',
         'user_id',
+        'payment_id',
     ];
 
     protected $appends = [
@@ -30,6 +32,11 @@ class Entry extends Model
     public function itens ()
     {
         return $this->belongsToMany(Item::class, 'entries_items')->withPivot('quantity');
+    }
+
+    public function getPaymentAttribute()
+    {
+        return PaymentType::fromValue($this->payment_id)->key;
     }
 
     public function getItemsStringAttribute ()
