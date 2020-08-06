@@ -31,7 +31,7 @@
 
     <div class="col-xs-2">
         <div class="form-group">
-            {!! Form::label('value', 'valor') !!}
+            {!! Form::label('value', 'Valor') !!}
             {!! Form::text('value', $item->value ?? null, ['class' => 'form-control']) !!}
         </div>
     </div>

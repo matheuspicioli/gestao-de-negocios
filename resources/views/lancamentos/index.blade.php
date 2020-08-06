@@ -133,35 +133,43 @@
 
             $('#adicionar-item').on('click', function (event) {
                 let item = null;
-                $.ajax('api/item/'+$('#item').val(), {
-                    type: 'GET',
-                    success: function (resultado, status, xhr) {
-                        let wrapper = $('#wrapper')
-                        let quantity = $('#quantidade')
+                callProductApi($('#item').val(), function (response, status, xhr) {
+                    let wrapper = $('#wrapper')
+                    let quantity = $('#quantidade')
+                    const change = $('#change')
+                    const valueRecieve = $('#valueRecieve')
 
-                        item = resultado;
-                        item.quantity = parseInt(quantity.val());
+                    item = response;
+                    item.quantity = parseInt(quantity.val());
 
-                        let price = 'R$ ' + `${parseFloat(item.value * quantity.val()).toFixed(2)}`.replace('.', ',');
-                        let precoUnitatio = 'R$ ' + `${parseFloat(item.value).toFixed(2)}`.replace('.', ',');
-                        let html = `<tr><td>${quantity.val()}</td><td>${item.name}</td><td>${precoUnitatio}</td><td class='preco' data-preco='${item.value}' data-quantidade='${quantity.val()}'>${price}</td><td><button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button></td></tr>`;
+                    const price = formatValueBackendToView(item.value * quantity.val())
+                    const precoUnitario =  formatValueBackendToView(item.value)
+                    const valueRecieveFormatted = formatValueBackendToView(valueRecieve.val())
+                    const changeFormatted = formatValueBackendToView(change.val())
 
-                        wrapper.prepend(html);
-                        quantity.val(1);
-                        calcularPrecoTotal();
-                        itensToApi.push(item);
-                    },
-                    error: function (xhr, status, error) {
-                        window.alert('Ocorreu um erro ao cadastrar o item: '+error);
-                    }
-                });
+                    const html = `<tr class='product-tr'>
+                            <td>${quantity.val()}</td>
+                            <td>${item.name}</td>
+                            <td>${precoUnitario}</td>
+                            <td>${valueRecieveFormatted}</td>
+                            <td class='change' data-value='${item.value}'>${changeFormatted}</td>
+                            <td class='preco' data-value='${item.value}' data-quantity='${quantity.val()}'>${price}</td>
+                            <td>
+                                <button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>`;
+
+                    wrapper.prepend(html);
+                    actionAfterChanges();
+                    itensToApi.push(item);
+                })
             });
 
             $('#wrapper').on('click', '.remover-item', function (event) {
                 // 1º PARENT = TD, 2º PARENT = TR
                 var isto = $(this);
                 isto.parent().parent().remove();
-                calcularPrecoTotal();
+                actionAfterChanges();
 
                 // ARRAY QUE É ENVIADO AO BACKEND
                 itensToApi = itensToApi.filter(function (item) {
@@ -170,24 +178,109 @@
                 });
             });
 
-            var calcularPrecoTotal = function() {
+            $('#item').on('change', function (event) {
+                const id = $(this).val()
+                let productValue = $('#productValue')
+                let quantity = $('#quantidade')
+                let totalValue = $('#totalValue')
+                let valueRecieve = $('#valueRecieve')
+                let change = $('#change')
+
+                callProductApi(id, function (response) {
+                    productValue.val(response.value)
+                    const totalValueResult = calculateTotalValue(response.value, quantity.val())
+                    const changeResult = calculateChangeValue(valueRecieve.val(), response.value, quantity.val())
+                    totalValue.val(totalValueResult)
+                    if (!isNaN(changeResult)) {
+                        change.val(changeResult)
+                    }
+                })
+            })
+
+            $('#quantidade').on('change', function (event) {
+                let quantity = $(this)
+                let productValue = $('#productValue')
+                let change = $('#change')
+                let totalValue = $('#totalValue')
+                let valueRecieve = $('#valueRecieve')
+
+                const totalValueResult = calculateTotalValue(productValue.val(), quantity.val())
+                const changeResult = calculateChangeValue(valueRecieve.val(), productValue.val(), quantity.val())
+                totalValue.val(totalValueResult)
+                if (!isNaN(changeResult)) {
+                    change.val(changeResult)
+                }
+            })
+
+            $('#valueRecieve').on('change', function (event) {
+                let productValue = $('#productValue')
+                let quantity = $('#quantidade')
+                let valueRecieve = $(this)
+                let change = $('#change')
+
+                const changeResult = calculateChangeValue(valueRecieve.val(), productValue.val(), quantity.val())
+                if (!isNaN(changeResult)) {
+                    change.val(changeResult)
+                }
+            })
+
+            let calculateTotalValue = function (productValue, productQuantity) {
+                return parseFloat(productValue) * parseFloat(productQuantity)
+            }
+
+            let calculateChangeValue = function (valueRecieve, productValue, productQuantity = 1) {
+                return parseFloat(valueRecieve) - (parseFloat(productValue) * parseInt(productQuantity))
+            }
+
+            let callProductApi = function (id, callbackSuccess) {
+                $.ajax(`api/item/${id}`, {
+                    type: 'GET',
+                    success: function (response, status, xhr) {
+                        callbackSuccess(response, status, xhr)
+                    },
+                    error: function (xhr, status, error) {
+                        window.alert('Ocorreu um erro ao cadastrar o item: ' + error);
+                    }
+                })
+            }
+
+            let actionAfterChanges = function() {
                 var total = 0;
-                $('.preco').each(function (index, item) {
-                    var value = item.dataset.preco;
-                    var quantity = item.dataset.quantidade;
+                $('.preco').each(function (index, nodeItem) {
+                    var value = nodeItem.dataset.value;
+                    var quantity = nodeItem.dataset.quantity;
                     total += parseFloat(value * quantity);
                 });
 
-                $('#valor-total').html(`R$ ${total.toFixed(2)}`.replace('.', ','));
+                /**
+                 * Limpar campos do form
+                 */
+                let quantity = $('#quantidade')
+                let productValue = $('#productValue')
+                let totalValue = $('#totalValue')
+                let valueRecieve = $('#valueRecieve')
+                let change = $('#change')
+
+                quantity.val(1);
+                productValue.val(null)
+                totalValue.val(null)
+                valueRecieve.val(null)
+                change.val(null)
+
+                $('#valor-total').html(formatValueBackendToView(total));
             }
 
-            var resetar = function () {
+            let resetar = function () {
                 var wrapper = $('#wrapper');
                 wrapper.html('');
                 $('#valor-total').html('R$ 0');
                 $('#quantidade').val(1);
                 itensToApi = []
             };
+
+            let formatValueBackendToView = function (value) {
+                return `R$ ${parseFloat(value).toFixed(2)}`.replace('.', ',')
+            }
 
             $('#salvar-lancamento').click(function (event) {
                 event.preventDefault();

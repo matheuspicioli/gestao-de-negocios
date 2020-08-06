@@ -18,6 +18,34 @@
 
     <div class="col-xs-1">
         <div class="form-group">
+            {!! Form::label('productValue', 'Valor do produto') !!}
+            {!! Form::text('productValue', null, ['class' => 'form-control', 'id' => 'productValue', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
+        </div>
+    </div>
+
+    <div class="col-xs-1">
+        <div class="form-group">
+            {!! Form::label('totalValue', 'Valor total') !!}
+            {!! Form::text('totalValue', null, ['class' => 'form-control', 'id' => 'totalValue', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
+        </div>
+    </div>
+
+    <div class="col-xs-1">
+        <div class="form-group">
+            {!! Form::label('valueRecieve', 'Valor recebido') !!}
+            {!! Form::text('valueRecieve', null, ['class' => 'form-control', 'id' => 'valueRecieve', 'placeholder' => '0.00']) !!}
+        </div>
+    </div>
+
+    <div class="col-xs-1">
+        <div class="form-group">
+            {!! Form::label('change', 'Troco') !!}
+            {!! Form::text('change', null, ['class' => 'form-control', 'id' => 'change', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
+        </div>
+    </div>
+
+    <div class="col-xs-1">
+        <div class="form-group">
             <button type="button" class="btn btn-xs btn-success" id="adicionar-item">
                 <i class="fa fa-plus"></i> Adicionar
             </button>
@@ -31,16 +59,20 @@
         </div>
     </div>
     {{-- ===== FORMULÁRIO ===== --}}
+</div>
 
+<div class="row">
     {{-- ===== LISTA ITENS ===== --}}
-    <div class="col-xs-6">
+    <div class="col-xs-12">
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
                 <th>Quantidade</th>
                 <th>Item</th>
                 <th>Valor unitário</th>
-                <th>Valor</th>
+                <th>Valor recebido</th>
+                <th>Troco</th>
+                <th>Valor final</th>
                 <th>Ações</th>
             </tr>
             </thead>
@@ -48,7 +80,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="3" style="text-align: right;">TOTAL</th>
+                <th colspan="5" style="text-align: right;">LANÇAMENTO TOTAL</th>
                 <td colspan="1" style="text-align: left;" id="valor-total"></td>
             </tr>
             </tfoot>
