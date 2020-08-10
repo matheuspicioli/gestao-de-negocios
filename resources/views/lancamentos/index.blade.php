@@ -138,6 +138,7 @@
                     let quantity = $('#quantidade')
                     const change = $('#change')
                     const valueRecieve = $('#valueRecieve')
+                    const payment = $('#payment_id option:selected').text()
 
                     item = response;
                     item.quantity = parseInt(quantity.val());
@@ -154,6 +155,7 @@
                             <td>${valueRecieveFormatted}</td>
                             <td class='change' data-value='${item.value}'>${changeFormatted}</td>
                             <td class='preco' data-value='${item.value}' data-quantity='${quantity.val()}'>${price}</td>
+                            <td>${payment}</td>
                             <td>
                                 <button class='btn btn-xs btn-danger remover-item' data-id='${item.id}' type='button'><i class="fa fa-trash"></i></button>
                             </td>
@@ -190,9 +192,14 @@
                     productValue.val(response.value)
                     const totalValueResult = calculateTotalValue(response.value, quantity.val())
                     const changeResult = calculateChangeValue(valueRecieve.val(), response.value, quantity.val())
+                    const payment_id = parseInt($('#payment_id').children('option:selected').val())
+
                     totalValue.val(totalValueResult)
-                    if (!isNaN(changeResult)) {
+                    if (!isNaN(changeResult) && isMoney(payment_id)) {
                         change.val(changeResult)
+                    } else {
+                        valueRecieve.val(totalValueResult)
+                        change.val(0)
                     }
                 })
             })
@@ -203,12 +210,16 @@
                 let change = $('#change')
                 let totalValue = $('#totalValue')
                 let valueRecieve = $('#valueRecieve')
+                const payment_id = parseInt($('#payment_id').children('option:selected').val())
 
                 const totalValueResult = calculateTotalValue(productValue.val(), quantity.val())
                 const changeResult = calculateChangeValue(valueRecieve.val(), productValue.val(), quantity.val())
                 totalValue.val(totalValueResult)
-                if (!isNaN(changeResult)) {
+                if (!isNaN(changeResult) && isMoney(payment_id)) {
                     change.val(changeResult)
+                } else {
+                    valueRecieve.val(totalValueResult)
+                    change.val(0)
                 }
             })
 
@@ -217,10 +228,13 @@
                 let quantity = $('#quantidade')
                 let valueRecieve = $(this)
                 let change = $('#change')
+                const payment_id = parseInt($('#payment_id').children('option:selected').val())
 
                 const changeResult = calculateChangeValue(valueRecieve.val(), productValue.val(), quantity.val())
-                if (!isNaN(changeResult)) {
+                if (!isNaN(changeResult) && isMoney(payment_id)) {
                     change.val(changeResult)
+                } else {
+                    change.val(0)
                 }
             })
 
@@ -281,6 +295,30 @@
             let formatValueBackendToView = function (value) {
                 return `R$ ${parseFloat(value).toFixed(2)}`.replace('.', ',')
             }
+
+            let isMoney = function (payment_id) {
+                return payment_id === 2
+            }
+
+            $('#payment_id').change(function (event) {
+                /**
+                 * PaymentType.php
+                 */
+                const payment_id = parseInt($(this).children('option:selected').val())
+                let valueRecieve = $('#valueRecieve')
+                let totalValue = $('#totalValue')
+                let change = $('#change')
+
+                if (isMoney(payment_id)) {
+                    valueRecieve.removeAttr('readonly')
+                    const changeValue = parseFloat(valueRecieve.val()) - parseFloat(totalValue.val())
+                    change.val(changeValue)
+                } else {
+                    valueRecieve.attr('readonly', 'readonly')
+                    valueRecieve.val(totalValue.val())
+                    change.val(0)
+                }
+            })
 
             $('#salvar-lancamento').click(function (event) {
                 event.preventDefault();

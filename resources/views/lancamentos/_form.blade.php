@@ -33,7 +33,7 @@
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('valueRecieve', 'Valor recebido') !!}
-            {!! Form::text('valueRecieve', null, ['class' => 'form-control', 'id' => 'valueRecieve', 'placeholder' => '0.00']) !!}
+            {!! Form::text('valueRecieve', null, ['class' => 'form-control', 'id' => 'valueRecieve', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
         </div>
     </div>
 
@@ -54,7 +54,7 @@
 
     <div class="col-xs-2">
         <div class="form-group">
-            {!! Form::label('payment_id', 'Pagamento') !!}
+            {!! Form::label('payment_id', 'Forma de pagamento') !!}
             {!! Form::select('payment_id', $payments, null, ['class' => 'form-control select2', 'id' => 'payment_id']) !!}
         </div>
     </div>
@@ -73,6 +73,7 @@
                 <th>Valor recebido</th>
                 <th>Troco</th>
                 <th>Valor final</th>
+                <th>Forma de pagamento</th>
                 <th>Ações</th>
             </tr>
             </thead>
