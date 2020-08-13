@@ -9,7 +9,7 @@
             <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
         </li>
         <li class="active">
-            <i class="fa fa-cubes"></i> Estoque</a>
+            <i class="fa fa-cubes"></i> Estoque
         </li>
     </ol>
 @stop
@@ -52,7 +52,8 @@
                                 <tr>
                                     <th>Nome</th>
                                     <th>Código</th>
-                                    <th>Preço</th>
+                                    <th>Valor</th>
+                                    <th>Quantidade</th>
                                     <th>Tipo</th>
                                     <th>Ações</th>
                                 </tr>
@@ -60,11 +61,11 @@
                                 <tbody>
                                 @foreach($itens as $item)
                                     <tr>
-                                        <td>{{ $item->nome }}</td>
-                                        <td>{{ $item->codigo }}</td>
-                                        <td>{{ $item->quantidade }}</td>
-                                        <td>R$ {{ number_format($item->preco, 2, ',', '.') }}</td>
-                                        <td>{{ $item->tipo }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->code }}</td>
+                                        <td>R$ {{ number_format($item->value, 2, ',', '.') }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->type }}</td>
                                         <td width="10%">
                                             <a href="{{ route('itens.editar', ['id' => $item->id]) }}"
                                                class="btn btn-xs btn-warning">
@@ -96,6 +97,7 @@
 @stop
 
 @section('js')
+    <script src="{{ asset('js/jquery-mask-plugin/dist/jquery.mask.min.js') }}"></script>
     <script>
         $(function () {
             $('#lancamentos-table').DataTable({
@@ -103,6 +105,8 @@
                     "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
                 }
             });
+
+            $('.money-format').mask("#.##0,00", {reverse: true})
 
             var tipo = $('#tipo');
             var quantidade = $('#quantidade');

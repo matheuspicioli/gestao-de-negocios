@@ -119,6 +119,7 @@
 @stop
 
 @section('js')
+    <script src="{{ asset('js/jquery-mask-plugin/dist/jquery.mask.min.js') }}"></script>
     <script>
         $(function () {
             let itensToApi = [];
@@ -129,7 +130,8 @@
                 }
             });
 
-            $('.select2').select2();
+            $('.select2').select2()
+            $('.money-format').mask("#.##0,00", {reverse: true})
 
             $('#adicionar-item').on('click', function (event) {
                 let item = null;
@@ -140,8 +142,11 @@
                     const valueRecieve = $('#valueRecieve')
                     const payment = $('#payment_id option:selected').text()
 
-                    item = response;
-                    item.quantity = parseInt(quantity.val());
+                    item = response
+                    item.quantity = parseInt(quantity.val())
+                    item.totalValue = item.value * quantity.val()
+                    item.valueRecieve = valueRecieve
+                    item.valueChange = change.val()
 
                     const price = formatValueBackendToView(item.value * quantity.val())
                     const precoUnitario =  formatValueBackendToView(item.value)
@@ -333,11 +338,11 @@
                         itens: itensToApi,
                         type: $('#type').val(),
                         user_id: $('#user_id').val(),
-                        payment_id: $('#payment_id').children("option:selected").val()
+                        payment_id: $('#payment_id').children("option:selected").val(),
                     },
                     success: function (response) {
-                        alert(`Pedio cadastrado com sucesso!`);
-                        window.location = window.location
+                        alert(`Pedido cadastrado com sucesso!`);
+                        // window.location = window.location
                     },
                     error: function (xhr, status, error) {
                         alert(xhr.responseJSON.message)

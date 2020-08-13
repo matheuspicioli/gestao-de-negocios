@@ -18,6 +18,10 @@ class CreateEntriesItemsTable extends Migration
 
             $table->smallInteger('quantity')->unsigned();
 
+            $table->float('value_recieved', 10, 2)->nullable();
+            $table->float('total_value', 10, 2)->nullable();
+            $table->float('value_change', 10, 2)->nullable();
+
             $table->bigInteger('item_id')->unsigned();
             $table->foreign('item_id')
                 ->references('id')

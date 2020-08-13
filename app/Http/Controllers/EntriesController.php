@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PaymentType;
+use App\Helpers\Money;
 use App\Http\Requests\StoreLancamentoRequest;
 use App\Models\Entry;
 use App\Models\Item;
@@ -63,9 +64,12 @@ class EntriesController extends Controller
 
             $entry->itens()->attach($itens->map(function ($item) use ($entry) {
                 return [
-                    'item_id'   => $item['id'],
-                    'entry_id'  => $entry->id,
-                    'quantity'  => $item['quantity']
+                    'item_id'           => $item['id'],
+                    'entry_id'          => $entry->id,
+                    'quantity'          => $item['quantity'],
+                    'value_recieved'    => Money::moneyToDatabase($item['valueRecieve']),
+                    'total_value'       => Money::moneyToDatabase($item['totalValue']),
+                    'value_change'      => Money::moneyToDatabase($item['valueChange']),
                 ];
             }));
 

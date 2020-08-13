@@ -19,28 +19,28 @@
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('productValue', 'Valor do produto') !!}
-            {!! Form::text('productValue', null, ['class' => 'form-control', 'id' => 'productValue', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
+            {!! Form::text('productValue', null, ['class' => 'form-control money-format', 'id' => 'productValue', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
         </div>
     </div>
 
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('totalValue', 'Valor total') !!}
-            {!! Form::text('totalValue', null, ['class' => 'form-control', 'id' => 'totalValue', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
+            {!! Form::text('totalValue', null, ['class' => 'form-control money-format', 'id' => 'totalValue', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
         </div>
     </div>
 
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('valueRecieve', 'Valor recebido') !!}
-            {!! Form::text('valueRecieve', null, ['class' => 'form-control', 'id' => 'valueRecieve', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
+            {!! Form::text('valueRecieve', null, ['class' => 'form-control money-format', 'id' => 'valueRecieve', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
         </div>
     </div>
 
     <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('change', 'Troco') !!}
-            {!! Form::text('change', null, ['class' => 'form-control', 'id' => 'change', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
+            {!! Form::text('change', null, ['class' => 'form-control money-format', 'id' => 'change', 'placeholder' => '0.00', 'readonly' => 'readonly']) !!}
         </div>
     </div>
 
