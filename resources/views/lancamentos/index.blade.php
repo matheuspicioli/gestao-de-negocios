@@ -145,7 +145,7 @@
                     item = response
                     item.quantity = parseInt(quantity.val())
                     item.totalValue = item.value * quantity.val()
-                    item.valueRecieve = valueRecieve
+                    item.valueRecieve = valueRecieve.val()
                     item.valueChange = change.val()
 
                     const price = formatValueBackendToView(item.value * quantity.val())
@@ -168,6 +168,8 @@
 
                     wrapper.prepend(html);
                     actionAfterChanges();
+
+                    console.log(item)
                     itensToApi.push(item);
                 })
             });
@@ -244,11 +246,26 @@
             })
 
             let calculateTotalValue = function (productValue, productQuantity) {
-                return parseFloat(productValue) * parseFloat(productQuantity)
+                productValue = parseFloat(productValue)
+                productQuantity = parseFloat(productQuantity)
+
+                if (isNaN(productValue) || isNaN(productQuantity)) {
+                    return 0
+                }
+
+                return productValue * productQuantity
             }
 
             let calculateChangeValue = function (valueRecieve, productValue, productQuantity = 1) {
-                return parseFloat(valueRecieve) - (parseFloat(productValue) * parseInt(productQuantity))
+                valueRecieve = parseFloat(valueRecieve)
+                productValue = parseFloat(productValue)
+                productQuantity = parseInt(productQuantity)
+
+                if (isNaN(valueRecieve) || isNaN(productValue) || isNaN(productQuantity)) {
+                    return 0
+                }
+
+                return valueRecieve - (productValue * productQuantity)
             }
 
             let callProductApi = function (id, callbackSuccess) {
@@ -342,7 +359,7 @@
                     },
                     success: function (response) {
                         alert(`Pedido cadastrado com sucesso!`);
-                        // window.location = window.location
+                        window.location = window.location
                     },
                     error: function (xhr, status, error) {
                         alert(xhr.responseJSON.message)

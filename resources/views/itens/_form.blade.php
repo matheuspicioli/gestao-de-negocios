@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="col-xs-2">
+    <div class="col-xs-1">
         <div class="form-group">
             {!! Form::label('code', 'Código') !!}
             {!! Form::text('code', $item->code ?? null, ['class' => 'form-control']) !!}
@@ -33,6 +33,27 @@
         <div class="form-group">
             {!! Form::label('value', 'Valor') !!}
             {!! Form::text('value', $item->value ?? null, ['class' => 'form-control money-format']) !!}
+        </div>
+    </div>
+
+    <div class="col-xs-2">
+        <div class="form-group">
+            {!! Form::label('validity', 'Validade') !!}
+            {!! Form::date('validity', $item->validity ?? null, ['class' => 'form-control']) !!}
+        </div>
+    </div>
+
+    <div class="col-xs-2">
+        <div class="form-group">
+            {!! Form::label('provider', 'Fornecedor') !!}
+            {!! Form::text('provider', $item->provider ?? null, ['class' => 'form-control']) !!}
+        </div>
+    </div>
+
+    <div class="col-xs-2">
+        <div class="form-group">
+            {!! Form::label('invoice', 'Nota fiscal') !!}
+            {!! Form::text('invoice', $item->invoice ?? null, ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>

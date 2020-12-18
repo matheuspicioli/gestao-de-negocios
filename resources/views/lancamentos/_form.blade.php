@@ -11,7 +11,7 @@
 
     <div class="col-xs-2">
         <div class="form-group">
-            {!! Form::label('item', 'Item') !!}
+            {!! Form::label('item', 'Produto') !!}
             {!! Form::select('item', $itens, $itensSelected ?? null, ['class' => 'form-control select2', 'id' => 'item']) !!}
         </div>
     </div>
@@ -68,7 +68,7 @@
             <thead>
             <tr>
                 <th>Quantidade</th>
-                <th>Item</th>
+                <th>Produto</th>
                 <th>Valor unitário</th>
                 <th>Valor recebido</th>
                 <th>Troco</th>

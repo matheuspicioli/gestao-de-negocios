@@ -20,6 +20,9 @@ class CreateItemsTable extends Migration
             $table->integer('quantity')->unsigned();
             $table->decimal('value', 10, 2);
             $table->enum('type', ['PRODUTO', 'SERVICO'])->default('SERVICO');
+            $table->date('validity')->nullable();
+            $table->string('provider', 150)->nullable();
+            $table->string('invoice', 240)->nullable();
 
             $table->timestamps();
             $table->softDeletes();
